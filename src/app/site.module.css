@@ -200,8 +200,8 @@
 
 .hero {
   display: grid;
-  gap: 28px;
-  padding: 20px var(--gutter) 56px;
+  gap: 48px;
+  padding: 40px var(--gutter) 64px;
   max-width: 1440px;
   margin: 0 auto;
 }
@@ -209,13 +209,15 @@
 .heroCopy {
   display: grid;
   align-content: center;
-  gap: 22px;
+  justify-items: center;
+  gap: 26px;
+  text-align: center;
 }
 
 .heroTitle {
   font-family: var(--f-display);
   font-weight: 600;
-  font-size: clamp(2.4rem, 4.6vw + 0.6rem, 4.6rem);
+  font-size: clamp(2.3rem, 3.6vw + 0.7rem, 4rem);
   line-height: 0.98;
   letter-spacing: -0.015em;
   text-wrap: balance;
@@ -231,13 +233,15 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 12px 20px;
+  justify-content: center;
+  gap: 16px 24px;
 }
 
 .specs {
   display: grid;
+  width: 100%;
   border-top: 1px solid var(--rule-strong);
-  margin-top: 6px;
+  margin-top: 8px;
 }
 .specs li {
   padding: 10px 0;
@@ -252,13 +256,48 @@
   margin-right: 4px;
 }
 
+@media (max-width: 899px) {
+  .hero {
+    gap: 72px;
+    padding-top: 64px;
+    padding-bottom: 72px;
+  }
+  .heroCopy {
+    gap: 32px;
+  }
+  .heroTitle {
+    line-height: 1.06;
+  }
+  .heroLede {
+    line-height: 1.65;
+  }
+  .actions {
+    flex-direction: column;
+    gap: 22px;
+  }
+  .specs {
+    margin-top: 24px;
+  }
+  .specs li {
+    padding: 15px 0;
+  }
+}
+
 @media (min-width: 900px) {
   .hero {
     grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-    gap: clamp(32px, 4vw, 72px);
-    padding-top: 36px;
-    min-height: calc(100svh - 64px);
+    gap: clamp(48px, 6vw, 112px);
+    padding-top: 88px;
+    padding-bottom: 104px;
     align-items: center;
+  }
+  .heroCopy {
+    justify-items: start;
+    gap: 30px;
+    text-align: left;
+  }
+  .actions {
+    justify-content: flex-start;
   }
 }
 
@@ -268,15 +307,21 @@
   position: relative;
   background: var(--sheet);
   border: 1px solid var(--rule-strong);
-  padding: 12px;
+  padding: 14px;
   display: grid;
-  gap: 12px;
+  gap: 16px;
+}
+@media (min-width: 900px) {
+  .sheet {
+    padding: 28px;
+    gap: 24px;
+  }
 }
 .sheet::before {
   /* inner drawing frame, as on a real tech pack */
   content: '';
   position: absolute;
-  inset: 6px;
+  inset: 7px;
   border: 1px solid var(--rule);
   pointer-events: none;
 }
@@ -428,6 +473,7 @@
 
 .sheetTitle {
   padding: 8px 8px 0;
+  text-align: center;
   font-family: var(--f-display);
   font-weight: 600;
   font-size: clamp(1.1rem, 0.7vw + 0.9rem, 1.45rem);
