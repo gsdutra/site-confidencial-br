@@ -1,43 +1,58 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-@import "~react-image-gallery/styles/css/image-gallery.css";
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
 
 body {
-  color: white;
-  background-color: #0D0D0D;
+  margin: 0;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
-.button {
-	transition: .2s;
-	cursor: pointer;
-}
-.button:hover {
-	transition: .2s;
-	transform: scale(1.02);
+img,
+svg {
+  display: block;
+  max-width: 100%;
 }
 
-.bt {
-	border-radius: 100px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	padding: 10px;
-	height: auto;
-	font-size: 18px;
-	background: #FF7700;
-	margin: 7px;
-	font-weight: 500;
-	font-size: 18px;
+button {
+  font: inherit;
+  color: inherit;
 }
 
-.showcontact {
-	height: 29px;
-	overflow-y: hidden;
-	transition: .5s;
+h1,
+h2,
+h3,
+p,
+ul,
+ol,
+figure,
+dl,
+dd {
+  margin: 0;
 }
 
-.showcontact:hover {
-	height: 440px;
-	transition: .5s;
+ul,
+ol {
+  padding: 0;
+  list-style: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0s !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

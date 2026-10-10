@@ -1,21 +1,22 @@
-import './globals.css'
-import { Inter } from 'next/font/google'
+import type { Metadata, Viewport } from 'next';
+import { Barlow, Barlow_Condensed } from 'next/font/google';
+import './globals.css';
 
-const inter = Inter({ subsets: ['latin'] })
+const body = Barlow({ subsets: ['latin'], weight: ['400', '500', '600'], variable: '--f-body' });
+const display = Barlow_Condensed({ subsets: ['latin'], weight: ['500', '600', '700'], variable: '--f-display' });
 
-export const metadata = {
-  title: 'Confidencial BR',
-  description: 'Segredo Indústria e Comércio Ltda',
-}
+export const metadata: Metadata = {
+  title: 'Confidencial Brasil · Uniformes e roupas para eventos',
+  description:
+    'Confecção própria de uniformes corporativos e roupas para eventos: polos, camisas, jaquetas, coletes e moletons com bordado e estampa.',
+};
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export const viewport: Viewport = { width: 'device-width', initialScale: 1, themeColor: '#070a15', colorScheme: 'dark' };
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
+    <html lang="pt-BR" className={`${body.variable} ${display.variable}`}>
+      <body>{children}</body>
     </html>
-  )
+  );
 }
