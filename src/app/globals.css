@@ -56,3 +56,17 @@ ol {
     scroll-behavior: auto !important;
   }
 }
+
+@page {
+  size: A4;
+  margin: 0;
+}
+
+@media print {
+  html,
+  body {
+    background: #070a15;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}

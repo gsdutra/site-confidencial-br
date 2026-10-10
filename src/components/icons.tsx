@@ -26,6 +26,14 @@ export function ArrowIcon({ className, dir = 'right' }: P & { dir?: 'left' | 'ri
   );
 }
 
+export function DownloadIcon({ className }: P) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M12 4v11M7 10l5 5 5-5M5 19h14" />
+    </svg>
+  );
+}
+
 export function CloseIcon({ className }: P) {
   return (
     <svg className={className} viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round">

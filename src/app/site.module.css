@@ -178,6 +178,8 @@
   background: var(--red-bright);
 }
 .btnGhost {
+  background: transparent;
+  cursor: pointer;
   border: 1px solid var(--rule-strong);
   color: var(--ink);
 }
@@ -933,11 +935,16 @@
   overflow-wrap: anywhere;
 }
 .contactActions a[href^='mailto'] {
+  max-width: 100%;
+  padding: 0 14px;
   text-transform: none;
-  letter-spacing: 0.01em;
+  letter-spacing: 0;
   font-family: var(--f-body);
   font-weight: 500;
-  font-size: 1rem;
+  /* keep the address on one line: scale down on narrow phones instead of wrapping */
+  font-size: clamp(0.8rem, 3.6vw, 1rem);
+  white-space: nowrap;
+  overflow-wrap: normal;
 }
 @media (min-width: 900px) {
   .contact {
@@ -986,5 +993,275 @@
   from {
     opacity: 0;
     transform: translateY(16px) scale(0.985);
+  }
+}
+
+/* ---------- PDF export ---------- */
+
+.pdfRow {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 18px;
+  padding-top: 24px;
+  border-top: 1px solid var(--rule);
+}
+.pdfRow .btnGhost:disabled {
+  opacity: 0.6;
+  cursor: progress;
+}
+.pdfHint {
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+}
+
+.btnSmall {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 36px;
+  padding: 0 12px;
+  border: 1px solid var(--rule-strong);
+  background: transparent;
+  cursor: pointer;
+  font-family: var(--f-display);
+  font-weight: 600;
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink);
+  transition: border-color 0.2s, color 0.2s;
+}
+.btnSmall svg {
+  width: 15px;
+  height: 15px;
+}
+.btnSmall:hover {
+  border-color: var(--red);
+  color: var(--red);
+}
+.btnSmall:disabled {
+  opacity: 0.6;
+  cursor: progress;
+}
+
+.pdfDialog {
+  width: min(520px, calc(100vw - 24px));
+  padding: 0;
+  border: 1px solid var(--rule-strong);
+  background: var(--sheet);
+  color: var(--ink);
+  font-family: var(--f-body), system-ui, sans-serif;
+}
+.pdfDialog[open] {
+  animation: sheetIn 0.4s var(--ease) both;
+}
+.pdfDialog::backdrop {
+  background: rgba(3, 5, 12, 0.78);
+  backdrop-filter: blur(3px);
+}
+.pdfDialogBody {
+  position: relative;
+  display: grid;
+  gap: 14px;
+  padding: 28px 24px 22px;
+}
+.pdfDialogTitle {
+  padding-right: 44px;
+  font-family: var(--f-display);
+  font-weight: 600;
+  font-size: 1.6rem;
+  line-height: 1.05;
+}
+.pdfOptions {
+  display: grid;
+  gap: 10px;
+  margin-top: 4px;
+}
+.pdfOption {
+  display: grid;
+  gap: 4px;
+  width: 100%;
+  padding: 14px 16px;
+  border: 1px solid var(--rule-strong);
+  background: transparent;
+  color: var(--ink);
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+}
+.pdfOption:hover {
+  border-color: var(--red);
+  background: rgba(242, 85, 60, 0.06);
+}
+.pdfOptionHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+}
+.pdfOptionTitle {
+  font-family: var(--f-display);
+  font-weight: 600;
+  font-size: 1.1rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.pdfNote {
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+}
+
+/* Print-only pieces stay out of the screen layout. */
+.printCatalog,
+.printLogo {
+  display: none;
+}
+
+@media print {
+  .page {
+    background: var(--desk);
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .page *,
+  .page *::before,
+  .page *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+  .header,
+  .skip,
+  .actions,
+  .catalogHead,
+  .tabsWrap,
+  .catalog > .grid,
+  .dialog,
+  .pdfDialog,
+  .pdfRow {
+    display: none !important;
+  }
+
+  /* Page 1: cover */
+  .hero {
+    display: block;
+    max-width: none;
+    padding: 0;
+  }
+  .heroCopy {
+    height: 296mm;
+    padding: 24mm 22mm;
+    align-content: center;
+    justify-items: center;
+    text-align: center;
+    gap: 9mm;
+    break-after: page;
+  }
+  .printLogo {
+    display: block;
+    width: 44mm;
+    height: auto;
+    /* the lockup file is black on transparent; flip it to the paper ink */
+    filter: invert(0.93);
+    margin-bottom: 6mm;
+  }
+  .heroTitle {
+    font-size: 34pt;
+    line-height: 1.04;
+  }
+  .heroLede {
+    margin: 0 auto;
+  }
+  .specs {
+    width: 120mm;
+    margin-top: 6mm;
+  }
+
+  /* Page 2: what the client defines */
+  .sheet {
+    margin: 16mm 14mm;
+    break-inside: avoid;
+    break-after: page;
+  }
+
+  /* Catalog: fixed A4 pages of 12 pieces */
+  .catalog {
+    max-width: none;
+    padding: 0;
+  }
+  .printCatalog {
+    display: block;
+  }
+  .printPage {
+    height: 296mm;
+    padding: 14mm 12mm;
+    display: flex;
+    flex-direction: column;
+    gap: 6mm;
+    overflow: hidden;
+    break-after: page;
+  }
+  .printIntro {
+    display: grid;
+    gap: 3mm;
+  }
+  .printCategoryTitle {
+    display: flex;
+    align-items: baseline;
+    gap: 3mm;
+    padding-bottom: 2mm;
+    border-bottom: 1px solid var(--rule-strong);
+    font-family: var(--f-display);
+    font-weight: 600;
+    font-size: 20pt;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .printGrid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 4mm 5mm;
+  }
+  .printGrid li {
+    break-inside: avoid;
+  }
+  .printImg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .printGrid .card {
+    padding: 1.5mm 1.5mm 0;
+    text-decoration: none;
+  }
+  .printGrid .cardMeta {
+    padding: 1.8mm 0.5mm 2.2mm;
+    gap: 0.5mm;
+  }
+  .printGrid .ref {
+    font-size: 7.5pt;
+  }
+  .printGrid .cardName {
+    font-size: 8pt;
+    line-height: 1.25;
+  }
+
+  /* Production, then clients + contact, each from a fresh page */
+  .section,
+  .contact {
+    max-width: none;
+    padding: 16mm 14mm 0;
+  }
+  .section {
+    break-before: page;
+  }
+  .prodGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .contact {
+    padding-bottom: 16mm;
   }
 }

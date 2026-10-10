@@ -3,6 +3,7 @@ import { catalog } from '@/data/catalog';
 import { clients, contact, mailLink, whatsappLink } from '@/lib/contact';
 import { ArrowIcon, MailIcon, WhatsAppIcon } from '@/components/icons';
 import Catalog from './Catalog';
+import PdfButton from './PdfButton';
 import s from './site.module.css';
 
 const total = catalog.reduce((n, c) => n + c.items.length, 0);
@@ -53,6 +54,8 @@ export default function Home() {
       <main id="topo">
         <section className={s.hero} aria-labelledby="hero-title">
           <div className={s.heroCopy}>
+            {/* eslint-disable-next-line @next/next/no-img-element -- plain img so it is loaded before printing */}
+            <img src="/marca/lockup.png" alt="" className={s.printLogo} />
             <h1 id="hero-title" className={s.heroTitle}>
               Uniformes corporativos e roupas para eventos, feitos na nossa confecção.
             </h1>
@@ -88,6 +91,7 @@ export default function Home() {
                   alt="Modelo vestindo jaqueta puffer preta com o logo Confidencial Brasil bordado no peito"
                   fill
                   priority
+                  unoptimized
                   sizes="(max-width: 900px) 92vw, 32vw"
                 />
               </div>
@@ -167,6 +171,7 @@ export default function Home() {
                   src="/fotos/bordadeiras.jpg"
                   alt="Fileira de bordadeiras industriais multicabeças na fábrica"
                   fill
+                  unoptimized
                   sizes="(max-width: 900px) 92vw, 44vw"
                 />
               </div>
@@ -180,6 +185,7 @@ export default function Home() {
                   src="/fotos/producao.jpg"
                   alt="Camisas dobradas e empilhadas em mesas no galpão de produção"
                   fill
+                  unoptimized
                   sizes="(max-width: 900px) 92vw, 44vw"
                 />
               </div>
@@ -237,6 +243,10 @@ export default function Home() {
             <a href={mailLink} className={s.btnGhost}>
               <MailIcon /> {contact.email}
             </a>
+          </div>
+          <div className={s.pdfRow}>
+            <PdfButton />
+            <span className={s.pdfHint}>Todas as peças em um arquivo para enviar ou imprimir.</span>
           </div>
         </section>
       </main>
